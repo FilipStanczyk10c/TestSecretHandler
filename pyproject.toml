@@ -1,0 +1,12 @@
+[project]
+name = "secret-test"
+version = "0.1.0"
+description = "Handler-based AIConsole package - your code controls the flow"
+requires-python = ">=3.12"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,3 @@
+# System packages (optional) - installed via apt-get during Docker build.
+# One package per line, no version numbers.
+# Example: ffmpeg

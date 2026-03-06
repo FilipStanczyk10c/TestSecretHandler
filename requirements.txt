@@ -1,0 +1,2 @@
+# REQUIRED: AIConsole client library (install from git)
+aic-client @ git+https://github.com/10clouds/aiconsole-platform.git#subdirectory=aic_client
