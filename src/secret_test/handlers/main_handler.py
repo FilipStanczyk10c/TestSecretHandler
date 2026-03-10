@@ -28,10 +28,15 @@ def _user_asks_for_secrets(message: str) -> bool:
 
 
 def _mask_value(value: str) -> str:
-    """Return a masked representation; show length so user can verify it's set."""
+    """Return a masked representation showing first two and last two characters."""
     if not value:
         return "∅ (empty)"
-    return "•" * min(len(value), 12) + (f" ({len(value)} chars)" if len(value) > 12 else "")
+    length = len(value)
+    if length > 4:
+        return f"{value[:2]}...{value[-2:]} ({length} chars)"
+    if length > 1:
+        return f"{value[0]}...{value[-1]} ({length} chars)"
+    return f"• ({length} chars)"
 
 
 def handle_user_request(
