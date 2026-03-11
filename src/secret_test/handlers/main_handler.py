@@ -56,7 +56,7 @@ def _mask_value(value: str) -> str:
 
 
 def _get_llm_api_keys_from_env() -> list[tuple[str, str]]:
-    """LLM API keys that may be set from project/workspace settings (env vars)."""
+    """LLM API keys from project/workspace settings (env vars). Includes all AIC_* except secrets."""
     known_llm_keys = (
         "OPENAI_API_KEY",
         "ANTHROPIC_API_KEY",
@@ -69,12 +69,19 @@ def _get_llm_api_keys_from_env() -> list[tuple[str, str]]:
         "DEEPSEEK_API_KEY",
         "XAI_API_KEY",
     )
+    seen = set()
     result = []
     for key in sorted(os.environ):
+        if key in seen:
+            continue
         if key in known_llm_keys:
             result.append((key, os.environ.get(key)))
-        elif key.startswith("AIC_") and ("LLM" in key or "API_KEY" in key or "APIKEY" in key):
+            seen.add(key)
+        elif key.startswith("AIC_"):
+            if key.startswith(SECRET_PREFIX):
+                continue  # Secrets are shown via "list secrets"
             result.append((key, os.environ.get(key)))
+            seen.add(key)
     return result
 
 
